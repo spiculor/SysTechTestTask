@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: nlp_service
+    volumes:
+      - ./app:/app/app
+      - ./tests:/app/tests
+      - ./data.txt:/app/data.txt
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  tests:
+    build: .
+    container_name: nlp_tests
+    volumes:
+      - ./app:/app/app
+      - ./tests:/app/tests
+      - ./data.txt:/app/data.txt
+    command: pytest /app/tests
